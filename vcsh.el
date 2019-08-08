@@ -2,9 +2,12 @@
 
 ;; Author: Štěpán Němec <stepnem@gmail.com>
 ;; Created: 2019-07-15 00:46:28 Monday +0200
+;; URL: https://gitlab.com/stepnem/vcsh-el
 ;; Keywords: vc files
-;; Licence: public domain
+;; License: public domain
+;; Version: 0.2.2
 ;; Tested-with: GNU Emacs 27
+;; Package-Requires: ((magit "2.90.1") (emacs "24.4"))
 
 ;;; Commentary:
 
@@ -34,9 +37,6 @@
 ;;; Code:
 
 (require 'magit)
-
-(defconst vcsh-version "0.2.1"
-  "Currently loaded version of the `vcsh' library.")
 
 ;; (defgroup vcsh () "Vcsh integration."
 ;;   :group 'magit)
