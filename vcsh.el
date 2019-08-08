@@ -58,10 +58,10 @@ Otherwise use relative paths."
 (defun vcsh-repo-p (dir)
   "Return non-nil if DIR is a vcsh repository."
   (let ((default-directory (file-name-as-directory (vcsh-repo-d))))
-    (setq dir (file-truename dir)))
-  (and (file-accessible-directory-p dir)
-       (file-equal-p (file-name-directory (directory-file-name dir))
-                     (vcsh-repo-d))))
+    (setq dir (file-truename dir))
+    (and (file-accessible-directory-p dir)
+         (file-equal-p (file-name-directory (directory-file-name dir))
+                       default-directory))))
 
 (defun vcsh-read-repo ()
   "Read vcsh repo directory name interactively."
