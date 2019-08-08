@@ -27,7 +27,7 @@
 
 ;; https://github.com/magit/magit/issues/2939
 ;; https://github.com/magit/magit/issues/460
-;; https://github.com/vanicat/magit/blob/t/vcsh/vcsh.el
+;; https://github.com/vanicat/magit/blob/t/vcsh/magit-vcsh.el
 
 ;; Corrections and constructive feedback appreciated.
 
@@ -35,7 +35,7 @@
 
 (require 'magit)
 
-(defconst vcsh-version "0.2"
+(defconst vcsh-version "0.2.1"
   "Currently loaded version of the `vcsh' library.")
 
 ;; (defgroup vcsh () "Vcsh integration."
