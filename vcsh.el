@@ -125,12 +125,12 @@ In particular, when this mode is enabled, `magit-status' and
                    #'vcsh--magit-status-setup-buffer)))
 
 (defun vcsh-unload-function ()
-  "Cleanup after the vcsh library."
+  "Clean up after the vcsh library."
   (vcsh-hack-magit-mode -1)
   nil)
 
 (defun vcsh-reload ()
-  "Reload the `vcsh' library."
+  "Reload the vcsh library."
   (interactive)
   (unload-feature 'vcsh t)
   (require 'vcsh))
