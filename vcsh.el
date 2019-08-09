@@ -13,11 +13,13 @@
 
 ;; Original idea by Jonas Bernoulli (see the first two links below).
 
-;; Other than basic "enter" functionality (`vcsh-link', `vcsh-unlink'),
-;; this library provides a minor mode, `vcsh-hack-magit-mode', that
-;; advises Magit functions so that `magit-list-repositories' and
-;; `magit-status' work with vcsh repos.  `vcsh-magit-status' works
-;; even without enabling the minor mode.
+;; Other than basic "enter" functionality (`vcsh-link', `vcsh-unlink')
+;; and some convenience commands (`vcsh-new' to init a repo and add
+;; files to it, `vcsh-write-gitignore'), this library provides a
+;; global minor mode `vcsh-hack-magit-mode' that advises Magit
+;; functions so that `magit-list-repositories' and `magit-status' work
+;; with vcsh repos. `vcsh-magit-status' works even without enabling
+;; the minor mode.
 
 ;; Please note that this library works by creating a regular file
 ;; named ".git" inside $VCSH_BASE directory (typically $HOME) and does
@@ -37,6 +39,7 @@
 ;;; Code:
 
 (require 'magit)
+(eval-when-compile (require 'subr-x))   ; when-let
 
 ;; (defgroup vcsh () "Vcsh integration."
 ;;   :group 'magit)
@@ -94,6 +97,42 @@ This is similar to vcsh \"enter\" command."
   (interactive (list (vcsh-read-repo)))
   (vcsh-link repo)
   (magit-status-setup-buffer (expand-file-name repo (vcsh-repo-d))))
+
+(defun vcsh-command (cmd &rest args)
+  "Run vcsh command CMD with ARGS and display the output, if any."
+  (when-let ((output (apply #'process-lines "vcsh" cmd args)))
+    (display-message-or-buffer
+     (concat "\"vcsh " cmd " " (string-join args " ") "\": "
+             (string-join output "\n")))))
+
+;;;###autoload
+(defun vcsh-new (name files)
+  "Init a new vcsh repo and add files to it.
+NAME is the repository name, FILES is a list of file names.
+This command also calls `vcsh-write-gitignore' for the new repo and,
+unless run in `noninteractive' mode, displays its Magit status buffer."
+  (interactive (list (read-string "Repo name: ")
+                     (let (fls done)
+                       (while (not done)
+                         (push (read-file-name "File: " (vcsh-base)) fls)
+                         (unless (y-or-n-p (format "%s\n\n%s"
+                                                   (string-join fls "\n")
+                                                   "Add more files? "))
+                           (setq done t)))
+                       fls)))
+  (vcsh-command "init" name)
+  (apply #'vcsh-command "run" name "git" "add" files)
+  (vcsh-write-gitignore name)
+  (unless noninteractive (vcsh-magit-status name)))
+
+;;;###autoload
+(defun vcsh-write-gitignore (&optional repo)
+  "Run \"vcsh write-gitignore\" for REPO.
+With a prefix argument or if REPO is nil, run the command for all vcsh
+repositories."
+  (interactive (unless current-prefix-arg (list (vcsh-read-repo))))
+  (let ((write (apply-partially #'vcsh-command "write-gitignore")))
+    (if repo (funcall write repo) (mapc write (vcsh-repos)))))
 
 ;;; Hack some Magit functions to work with vcsh repos
 (defun vcsh--magit-list-repos-1 (orig &rest args)
