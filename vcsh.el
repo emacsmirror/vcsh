@@ -62,12 +62,14 @@ Otherwise use relative paths."
     (and (file-accessible-directory-p dir)
          (file-equal-p (file-name-directory (directory-file-name dir))
                        default-directory))))
+
+(defun vcsh-repos ()
+  "Return list of vcsh repo names."
+  (mapcar #'file-name-base (directory-files (vcsh-repo-d) nil "^[^.]")))
 
 (defun vcsh-read-repo ()
   "Read vcsh repo directory name interactively."
-  (completing-read "vcsh repository: "
-                   (directory-files (vcsh-repo-d) nil "^[^.]")
-                   nil t))
+  (completing-read "vcsh repository: " (vcsh-repos) nil t))
 
 ;;;###autoload
 (defun vcsh-link (repo)
@@ -75,7 +77,7 @@ Otherwise use relative paths."
 This is similar to vcsh \"enter\" command."
   (interactive (list (vcsh-read-repo)))
   (let ((worktree (vcsh-base))
-        (repo-path (expand-file-name repo (vcsh-repo-d))))
+        (repo-path (expand-file-name (concat repo ".git") (vcsh-repo-d))))
     (with-temp-file (expand-file-name ".git" worktree)
       (insert "gitdir: " (if (vcsh-absolute-p) repo-path
                            (file-relative-name repo-path worktree)) "\n"))))
