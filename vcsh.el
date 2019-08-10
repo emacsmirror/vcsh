@@ -66,6 +66,10 @@ Otherwise use relative paths."
          (file-equal-p (file-name-directory (directory-file-name dir))
                        default-directory))))
 
+(defun vcsh-repo-path (repo)
+  "Return absolute path of vcsh repository REPO."
+  (expand-file-name (concat repo ".git") (vcsh-repo-d)))
+
 (defun vcsh-repos ()
   "Return list of vcsh repo names."
   (mapcar #'file-name-base (directory-files (vcsh-repo-d) nil "^[^.]")))
@@ -80,7 +84,7 @@ Otherwise use relative paths."
 This is similar to vcsh \"enter\" command."
   (interactive (list (vcsh-read-repo)))
   (let ((worktree (vcsh-base))
-        (repo-path (expand-file-name (concat repo ".git") (vcsh-repo-d))))
+        (repo-path (vcsh-repo-path repo)))
     (with-temp-file (expand-file-name ".git" worktree)
       (insert "gitdir: " (if (vcsh-absolute-p) repo-path
                            (file-relative-name repo-path worktree)) "\n"))))
@@ -96,7 +100,7 @@ This is similar to vcsh \"enter\" command."
   "Make vcsh REPO current (cf. `vcsh-link') and run `magit-status' in it."
   (interactive (list (vcsh-read-repo)))
   (vcsh-link repo)
-  (magit-status-setup-buffer (expand-file-name repo (vcsh-repo-d))))
+  (magit-status-setup-buffer (vcsh-repo-path repo)))
 
 (defun vcsh-command (cmd &rest args)
   "Run vcsh command CMD with ARGS and display the output, if any."
@@ -148,7 +152,11 @@ Checkdoc: can you guess what ORIG and ARGS mean?"
   "Make `magit-status-setup-buffer' handle vcsh repositories.
 Checkdoc: can you guess what DIR means?"
   (unless dir (setq dir default-directory))
-  (when (vcsh-repo-p dir) (vcsh-link dir)))
+  (when (vcsh-repo-p dir) (vcsh-link
+                           ;;-D
+                           (file-name-base
+                            (directory-file-name
+                             (file-name-as-directory dir))))))
 
 ;;;###autoload
 (define-minor-mode vcsh-hack-magit-mode
