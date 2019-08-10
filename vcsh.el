@@ -39,7 +39,7 @@
 ;;; Code:
 
 (require 'magit)
-(eval-when-compile (require 'subr-x))   ; when-let
+(eval-when-compile (require 'subr-x))   ; string-join, when-let
 
 ;; (defgroup vcsh () "Vcsh integration."
 ;;   :group 'magit)
