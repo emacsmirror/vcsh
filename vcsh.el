@@ -18,7 +18,7 @@
 ;; files to it, `vcsh-write-gitignore'), this library provides a
 ;; global minor mode `vcsh-hack-magit-mode' that advises Magit
 ;; functions so that `magit-list-repositories' and `magit-status' work
-;; with vcsh repos. `vcsh-magit-status' works even without enabling
+;; with vcsh repos.  `vcsh-magit-status' works even without enabling
 ;; the minor mode.
 
 ;; Please note that this library works by creating a regular file
