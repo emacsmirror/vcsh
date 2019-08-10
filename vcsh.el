@@ -5,9 +5,9 @@
 ;; URL: https://gitlab.com/stepnem/vcsh-el
 ;; Keywords: vc files
 ;; License: public domain
-;; Version: 0.2.2
+;; Version: 0.3
 ;; Tested-with: GNU Emacs 27
-;; Package-Requires: ((magit "2.90.1") (emacs "24.4"))
+;; Package-Requires: ((magit "2.90.1") (emacs "25"))
 
 ;;; Commentary:
 
