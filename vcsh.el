@@ -119,9 +119,9 @@ unless run in `noninteractive' mode, displays its Magit status buffer."
                      (let (fls done)
                        (while (not done)
                          (push (read-file-name "File: " (vcsh-base)) fls)
-                         (unless (y-or-n-p (format "%s\n\n%s"
+                         (unless (y-or-n-p (format "%s\n\n%s? "
                                                    (string-join fls "\n")
-                                                   "Add more files? "))
+                                                   "Add more files"))
                            (setq done t)))
                        fls)))
   (vcsh-command "init" name)
