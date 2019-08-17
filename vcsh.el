@@ -5,7 +5,7 @@
 ;; URL: https://gitlab.com/stepnem/vcsh-el
 ;; Keywords: vc, files
 ;; License: public domain
-;; Version: 0.4
+;; Version: 0.4.1
 ;; Tested-with: GNU Emacs 27
 ;; Package-Requires: ((emacs "25"))
 
@@ -59,11 +59,12 @@ Otherwise use relative paths."
 
 (defun vcsh-repo-p (dir)
   "Return non-nil if DIR is a vcsh repository."
-  (let ((default-directory (file-name-as-directory (vcsh-repo-d))))
-    (setq dir (file-truename dir))
-    (and (file-accessible-directory-p dir)
-         (file-equal-p (file-name-directory (directory-file-name dir))
-                       default-directory))))
+  (when (string-match-p "[^/]\\.git$" dir)
+    (let ((default-directory (file-name-as-directory (vcsh-repo-d))))
+      (setq dir (file-truename dir))
+      (and (file-accessible-directory-p dir)
+           (file-equal-p (file-name-directory (directory-file-name dir))
+                         default-directory)))))
 
 (defun vcsh-repo-path (repo)
   "Return absolute path of vcsh repository REPO."
