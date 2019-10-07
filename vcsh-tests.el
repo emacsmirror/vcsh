@@ -7,6 +7,7 @@
   (let ((repos (directory-files (vcsh-repo-d) t "^[^.]")))
     (dolist (repo repos)
       (should (vcsh-repo-p repo))
+      (should (vcsh-repo-p (file-name-as-directory repo)))
       (should (vcsh-repo-p (file-name-nondirectory repo))))))
 
 ;; Local Variables:

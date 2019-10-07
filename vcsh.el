@@ -59,7 +59,7 @@ Otherwise use relative paths."
 
 (defun vcsh-repo-p (dir)
   "Return non-nil if DIR is a vcsh repository."
-  (when (string-match-p "[^/]\\.git$" dir)
+  (when (string-match-p "[^/]\\.git/?$" dir)
     (let ((default-directory (file-name-as-directory (vcsh-repo-d))))
       (setq dir (file-truename dir))
       (and (file-accessible-directory-p dir)
