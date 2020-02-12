@@ -55,7 +55,9 @@ Otherwise use relative paths."
 (defun vcsh-repo-d ()
   "Return name of directory where vcsh repos are located."
   (or (getenv "VCSH_REPO_D")
-      (substitute-env-in-file-name "$XDG_CONFIG_HOME/vcsh/repo.d")))
+      (and (getenv "XDG_CONFIG_HOME")
+           (substitute-env-in-file-name "$XDG_CONFIG_HOME/vcsh/repo.d"))
+      (substitute-env-in-file-name "$HOME/.config/vcsh/repo.d")))
 
 (defun vcsh-repo-p (dir)
   "Return non-nil if DIR is a vcsh repository."
