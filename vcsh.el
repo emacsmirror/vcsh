@@ -7,7 +7,7 @@
 ;; License: public domain
 ;; Version: 0.4.2
 ;; Tested-with: GNU Emacs 27
-;; Package-Requires: ((emacs "25"))
+;; Package-Requires: ((emacs "25.1"))
 
 ;;; Commentary:
 
