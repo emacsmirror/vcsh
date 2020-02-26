@@ -5,7 +5,7 @@
 ;; URL: https://gitlab.com/stepnem/vcsh-el
 ;; Keywords: vc, files
 ;; License: public domain
-;; Version: 0.4.3
+;; Version: 0.4.4
 ;; Tested-with: GNU Emacs 27, 28
 ;; Package-Requires: ((emacs "25.1"))
 
@@ -108,7 +108,8 @@ This is similar to vcsh \"enter\" command."
 (defun vcsh-new (name files)
   "Init a new vcsh repo and add files to it.
 NAME is the repository name, FILES is a list of file names.
-This command also calls `vcsh-write-gitignore' for the new repo."
+After creation, this command also calls `vcsh-write-gitignore'
+for the new repo, and runs `vcsh-after-new-functions'."
   (interactive (list (read-string "Repo name: ")
                      (let (fls done)
                        (while (not done)
