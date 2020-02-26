@@ -17,16 +17,18 @@ The arguments are passed to `format'."
 ;;   (vcsh-tests-log "\nvcsh-repo-d returns: %s" (vcsh-repo-d)))
 
 (defmacro vcsh-tests-letenv (specs &rest body)
-  "Evaluate BODY with each env VAR bound to VAL.
+  "Evaluate BODY with each env VAR temporarily set to VAL.
+Works by let-binding `process-environment' around BODY.  See also
+`set-env'.
 
 \(fn ((VAR VAL)...) BODY...)"
   (declare (indent 1) (debug ((&rest (form &optional form)) body)))
   `(let ((process-environment
           (append
-           (list ,@(mapcar (lambda (spec) (macroexp-let2 nil cadr (cadr spec)
+           (list ,@(mapcar (lambda (spec) (macroexp-let2 nil value (cadr spec)
                                        `(concat ,(car spec)
-                                                (when ,cadr "=")
-                                                ,cadr)))
+                                                (when ,value "=")
+                                                ,value)))
                            specs))
            process-environment)))
      ,@body))
