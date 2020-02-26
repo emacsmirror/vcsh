@@ -17,10 +17,10 @@ The arguments are passed to `format'."
 ;;   (vcsh-tests-log "\nvcsh-repo-d returns: %s" (vcsh-repo-d)))
 
 (defmacro vcsh-tests-letenv (specs &rest body)
-  "Execute BODY with each env VAR bound to VAL.
+  "Evaluate BODY with each env VAR bound to VAL.
 
 \(fn ((VAR VAL)...) BODY...)"
-  (declare (indent 1) (debug ((&rest form form) body)))
+  (declare (indent 1) (debug ((&rest (form &optional form)) body)))
   `(let ((process-environment
           (append
            (list ,@(mapcar (lambda (spec) (macroexp-let2 nil cadr (cadr spec)
@@ -31,7 +31,7 @@ The arguments are passed to `format'."
            process-environment)))
      ,@body))
 
-;; ;;; Test of `vcsh-tests-letenv' macro sanity:
+;;; Test of `vcsh-tests-letenv' macro sanity:
 ;; (let* ((var "HOME")
 ;;        (before (getenv var))
 ;;        inside-before
