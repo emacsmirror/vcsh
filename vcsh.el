@@ -1,8 +1,8 @@
 ;;; vcsh.el --- vcsh integration -*- lexical-binding: t -*-
 
-;; Author: Štěpán Němec <stepnem@gmail.com>
+;; Author: Štěpán Němec <stepnem@smrk.net>
 ;; Created: 2019-07-15 00:46:28 Monday +0200
-;; URL: https://gitlab.com/stepnem/vcsh-el
+;; URL: http://git.smrk.net/vcsh.el
 ;; Keywords: vc, files
 ;; License: public domain
 ;; Version: 0.4.4
@@ -34,7 +34,7 @@
 ;; https://github.com/magit/magit/issues/460
 ;; https://github.com/vanicat/magit/blob/t/vcsh/magit-vcsh.el
 
-;; Corrections and constructive feedback appreciated.
+;; Corrections and productive feedback appreciated.
 
 ;;; Code:
 
