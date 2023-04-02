@@ -34,7 +34,8 @@
 ;; https://github.com/magit/magit/issues/460
 ;; https://github.com/vanicat/magit/blob/t/vcsh/magit-vcsh.el
 
-;; Corrections and productive feedback appreciated.
+;; Corrections and productive feedback appreciated, publicly
+;; (<public@smrk.net>, inbox.smrk.net) or in private.
 
 ;;; Code:
 
